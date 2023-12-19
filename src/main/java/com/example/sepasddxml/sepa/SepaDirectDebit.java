@@ -39,18 +39,20 @@ public class SepaDirectDebit {
         //Mittente della richiesta di incasso
         initgPty.append("Nm").value({nomeMittente}); //[max70Text]
 
-        XMLNode nodeOthr = initgPty.append("Id")
-                .append("OrgId")
-                .append("Othr");
+        XMLNode nodeOrg = initgPty.append("Id")
+                .append("OrgId");
 
-        nodeOthr.append("Id").value({CodiceUnicoCBI}) //[max35Text]
+        XMLNode nodeOthr1 = nodeOrg.append("Othr");
 
-        /Codice identificativo fiscale univoco gestito dal Mittente/Ordinante a livello di blocco
-        //Payment Information (potenzialmente multiplo), denominato Payment Information Identification, il quale
-        //può abilitare (se gestito dal Mittente/Ordinante) la riconciliazione di singoli blocchi di richieste di incasso
-        //omogenei per Creditore, data scadenza e conto di accredito (viene difatti parimenti restituito negli esiti a
-        //livello di stato avanzamento 8). Dovrebbe essere "CBI"
-        nodeOthr.append("Issr").value({identificativo}); //[max35Text]
+        nodeOthr1.append("Id").value({CodiceUnicoCBI}) //[max35Text]
+
+        nodeOthr1.append("Issr").value("CBI"); //[max35Text]
+
+        XMLNode nodeOthr2 = nodeOrg.append("Othr");
+
+        nodeOthr2.append("Id").value({CodiceFiscaleEnte}) //[max35Text]
+
+        nodeOthr2.append("Issr").value("ADE") //[max35Text]
 
         Blocco GrpHdr*/
     }
